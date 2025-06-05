@@ -1,9 +1,9 @@
 Installation
 ============
 
-Prior to installing my-package you should install `PyTorch <https://pytorch.org>`_ according to the official instructions
+Prior to installing flexolmo you should install `PyTorch <https://pytorch.org>`_ according to the official instructions
 specific to your operating system and hardware.
 
-Then you can install my-package from `PyPI <https://pypi.org/project/my-package/>`_ with::
+Then you can install flexolmo from `PyPI <https://pypi.org/project/flexolmo/>`_ with::
 
-    pip install my-package
+    pip install flexolmo

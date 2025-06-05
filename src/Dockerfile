@@ -4,13 +4,13 @@ FROM ${BASE} as stable
 
 # Install other dependencies, but not the source code.
 COPY pyproject.toml .
-COPY src/my_package/__init__.py src/my_package/__init__.py
-COPY src/my_package/version.py src/my_package/version.py
+COPY src/flexolmo/__init__.py src/flexolmo/__init__.py
+COPY src/flexolmo/version.py src/flexolmo/version.py
 RUN pip install --no-cache-dir '.[all]' && \
-    pip uninstall -y my-package && \
+    pip uninstall -y flexolmo && \
     rm -rf *
 
-WORKDIR /app/my-package
+WORKDIR /app/flexolmo
 
 FROM stable as nightly
 

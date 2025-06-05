@@ -1,2 +1,2 @@
-def test_my_package():
+def test_flexolmo():
     assert True
