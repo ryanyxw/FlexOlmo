@@ -13,7 +13,7 @@ on:
   #   paths:
   #     - 'Makefile'
   #     - 'pyproject.toml'
-  #     - 'src/olmo_core/version.py'
+  #     - 'src/flexolmo/version.py'
   #     - 'src/Dockerfile'
   #     - '.github/workflows/docker.yml'
   push:
