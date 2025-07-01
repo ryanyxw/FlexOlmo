@@ -24,6 +24,9 @@ from olmo_core.train import (
 from olmo_core.train.train_module import (
     TransformerTrainModuleConfig,
 )
+from olmo_core.utils import (
+    prepare_cli_environment,
+)
 from rich import print
 
 from flexolmo.internal.common import (
@@ -83,6 +86,8 @@ if __name__ == "__main__":
         sys.exit(1)
 
     cmd, run_name, *overrides = sys.argv[1:]
+
+    prepare_cli_environment()
 
     try:
         config = build_experiment_config(
