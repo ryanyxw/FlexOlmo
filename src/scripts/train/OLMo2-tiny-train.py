@@ -29,10 +29,10 @@ from rich import print
 from flexolmo.internal.common import (
     CommonComponents,
     build_experiment_config,
+    get_root_dir,
 )
 from flexolmo.internal.model_utils import *  # noqa
 from flexolmo.internal.train_utils import train
-from flexolmo.internal.utils import get_root_dir
 
 log = logging.getLogger(__name__)
 

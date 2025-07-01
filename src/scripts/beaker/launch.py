@@ -10,7 +10,6 @@ from typing import List, Tuple
 from olmo_core.internal.common import (
     BeakerEnvVar,
     get_beaker_username,
-    get_root_dir,
 )
 from olmo_core.io import is_url
 from olmo_core.launch.beaker import (
@@ -23,6 +22,8 @@ from olmo_core.utils import (
     prepare_cli_environment,
 )
 from rich import print
+
+from flexolmo.internal.common import get_root_dir
 
 log = logging.getLogger(__name__)
 
@@ -123,7 +124,9 @@ def parse_args() -> Tuple[argparse.Namespace, List[str], List[str]]:
 
     # Positional arguments
 
-    parser.add_argument("cmd", choices=["dry_run", "launch"], help="Command to execute: dry_run or launch")
+    parser.add_argument(
+        "cmd", choices=["dry_run", "launch"], help="Command to execute: dry_run or launch"
+    )
 
     parser.add_argument("run_name", help="Run identifier (e.g., run01)")
 
@@ -156,7 +159,9 @@ def main():
 
     args, script_command, launch_overrides = parse_args()
 
-    script_command = update_command(script_command=script_command, run_name=args.run_name, cmd=args.cmd)
+    script_command = update_command(
+        script_command=script_command, run_name=args.run_name, cmd=args.cmd
+    )
 
     prepare_cli_environment()
 
