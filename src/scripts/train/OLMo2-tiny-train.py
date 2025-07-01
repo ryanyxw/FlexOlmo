@@ -53,6 +53,7 @@ def build_model_config(common: CommonComponents):
 
 
 def build_dataset_config(common: CommonComponents) -> NumpyDatasetConfig:
+    print("Updating dataset config")
     from flexolmo.data.mixes import CustomDataMix
 
     dataset_config = common.dataset
@@ -60,6 +61,7 @@ def build_dataset_config(common: CommonComponents) -> NumpyDatasetConfig:
     dataset_config.mix_base_dir = os.path.join(
         os.path.dirname(os.path.dirname(CURRENT_DIR)), "data"
     )
+    print("mix base dir", dataset_config.mix_base_dir)
     return dataset_config
 
 
