@@ -79,7 +79,7 @@ def build_train_module_config(common: CommonComponents) -> TransformerTrainModul
 if __name__ == "__main__":
     print(sys.argv)
     if len(sys.argv) < 2:
-        print(f"Usage: torchrun [OPTS..] {sys.argv[0]} run_name [OVERRIDES...]")
+        print(f"Usage: torchrun [OPTS..] {sys.argv[0]} launch run_name [OVERRIDES...]")
         sys.exit(1)
 
     cmd, run_name, *overrides = sys.argv[1:]

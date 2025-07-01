@@ -144,7 +144,7 @@ def _get_data_mix_path(name: str) -> Generator[Path, None, None]:
 
     try:
         with importlib_resources.as_file(
-            importlib_resources.files("olmo_modular").joinpath(
+            importlib_resources.files("flexolmo").joinpath(
                 f"data/mixes/{os.path.basename(name)}.txt"
             )
         ) as path:

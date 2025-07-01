@@ -1,4 +1,4 @@
-# TODO: This file is a copy of the original file from olmo_eval, with the only change being the import of the build_task function from olmo_modular.eval.
+# TODO: This file is a copy of the original file from olmo_eval, with the only change being the import of the build_task function from flexolmo.eval.
 import logging
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Union
