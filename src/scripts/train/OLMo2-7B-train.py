@@ -44,22 +44,14 @@ CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 def build_model_config(common: CommonComponents):
-    return TransformerConfig.olmo2_tiny(  # type: ignore
-        # vocab_size=common.tokenizer.padded_vocab_size(),
-        vocab_size=256,
-        n_layers=1,
-        n_heads=1,
-    )
+    return TransformerConfig.olmo2_7B(vocab_size=common.tokenizer.padded_vocab_size())
 
 
 def build_dataset_config(common: CommonComponents) -> NumpyDatasetConfig:
     from flexolmo.data.mixes import CustomDataMix
 
     dataset_config = common.dataset
-    dataset_config.mix = CustomDataMix.test_mix  # change the mix to the annealing mix
-    dataset_config.mix_base_dir = os.path.join(
-        os.path.dirname(os.path.dirname(CURRENT_DIR)), "data"
-    )
+    dataset_config.mix = CustomDataMix.public_mix
     return dataset_config
 
 
@@ -71,11 +63,11 @@ def build_trainer_config(common: CommonComponents) -> TrainerConfig:
 
 def build_train_module_config(common: CommonComponents) -> TransformerTrainModuleConfig:
     train_module_config = common.train_module
-    train_module_config.rank_microbatch_size = 8 * SEQUENCE_LENGTH
+    train_module_config.rank_microbatch_size = 2 * SEQUENCE_LENGTH
     train_module_config.scheduler = CosWithWarmup(warmup_steps=2000)
 
     assert isinstance(train_module_config.optim, AdamWConfig)
-    train_module_config.optim.lr = 4e-4
+    train_module_config.optim.lr = 9e-4
     return train_module_config
 
 
