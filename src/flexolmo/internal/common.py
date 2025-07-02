@@ -307,7 +307,7 @@ def build_experiment_config(
         finalize_config(config)
 
     for idx, key in enumerate(overrides):
-        if "dataset.mix" in key:
+        if "dataset.mix" in key and "dataset.mix_base_dir" not in key:
             override_datamix = key.split("=")[1]
             override_datamix_idx = idx
             break
