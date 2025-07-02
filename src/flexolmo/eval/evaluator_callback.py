@@ -51,7 +51,7 @@ class DownstreamEvaluatorUpdated(Evaluator):
     ):
         # from olmo_eval import ICLMetric
 
-        from olmo_modular.eval import ICLMetric, build_task  # this is the only change
+        from flexolmo.eval import ICLMetric, build_task  # this is the only change
 
         task_dataset: Union[ICLMultiChoiceTaskDataset, ICLMultiChoiceTaskDatasetUpdated]
         if batch_spec.fixed_sequence_length:
