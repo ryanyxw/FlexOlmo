@@ -90,7 +90,7 @@ def get_root_dir(cluster: str = "") -> str:
 
 def get_save_dir(root_dir: str, run_name: str) -> str:
     if is_url(root_dir):
-        return "{run_name}"
+        return f"{run_name}"
     elif (beaker_username := get_beaker_username()) is not None:
         return f"{root_dir}/checkpoints/{beaker_username.lower()}/{run_name}"
     else:
