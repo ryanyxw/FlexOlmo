@@ -24,9 +24,6 @@ from olmo_core.train import (
 from olmo_core.train.train_module import (
     TransformerTrainModuleConfig,
 )
-from olmo_core.utils import (
-    prepare_cli_environment,
-)
 from rich import print
 
 from flexolmo.internal.common import (
@@ -79,7 +76,9 @@ if __name__ == "__main__":
 
     cmd, run_name, *overrides = sys.argv[1:]
 
-    prepare_cli_environment()
+    # prepare_cli_environment()
+    if cmd == "launch":
+        prepare_training_environment()
 
     try:
         config = build_experiment_config(
@@ -103,7 +102,6 @@ if __name__ == "__main__":
         )
         if cmd == "dry_run":
             sys.exit(0)  # Exit early for dry run
-        prepare_training_environment()
         train(config)
     finally:
         teardown_training_environment()
