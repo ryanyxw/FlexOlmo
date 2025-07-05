@@ -19,7 +19,6 @@ from olmo_core.internal.common import (
     get_beaker_username,
     get_work_dir,
 )
-from olmo_core.io import is_url
 from olmo_core.nn.transformer import (
     TransformerConfig,
     TransformerDataParallelWrappingStrategy,
@@ -77,10 +76,8 @@ class ExperimentConfig(Config):
 
 
 def get_root_dir(cluster: str = "") -> str:
-    root_dir: str = "weka://oe-training-default/ai2-llm"
-    if "cirrascale" in cluster:
-        root_dir = "/weka/oe-training-default/ai2-llm"
-    elif "google" in cluster:
+    root_dir: str = "/weka/oe-training-default/ai2-llm"
+    if "google" in cluster:
         root_dir = "gs://ai2-llm"
     elif "local" in cluster:
         root_dir = "gs://ai2-llm"
@@ -88,9 +85,7 @@ def get_root_dir(cluster: str = "") -> str:
 
 
 def get_save_dir(root_dir: str, run_name: str) -> str:
-    if is_url(root_dir):
-        return f"{run_name}"
-    elif (beaker_username := get_beaker_username()) is not None:
+    if (beaker_username := get_beaker_username()) is not None:
         return f"{root_dir}/checkpoints/{beaker_username.lower()}/{run_name}"
     else:
         return f"{root_dir}/checkpoints/{run_name}"
