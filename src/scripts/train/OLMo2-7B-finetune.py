@@ -31,7 +31,7 @@ from flexolmo.internal.common import (
     print_model_params,
 )
 from flexolmo.internal.model_utils import *  # noqa
-from flexolmo.internal.train_utils import anneal
+from flexolmo.internal.train_utils import finetune
 
 log = logging.getLogger(__name__)
 
@@ -102,6 +102,6 @@ if __name__ == "__main__":
         print_model_params(config)
         if dry_run:
             sys.exit(0)  # Exit early for dry run
-        anneal(checkpoint, config)
+        finetune(checkpoint, config)
     finally:
         teardown_training_environment()
