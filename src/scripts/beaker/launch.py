@@ -184,10 +184,12 @@ if __name__ == "__main__":
 
     """
     # Example usage:
-    python src/scripts/beaker/launch.py [launch|dry_run] ai2/jupiter-cirrascale-2 \
+    python src/scripts/beaker/launch.py [launch|dry_run] [cluster] \
         --launch.num_nodes=1 \
         --launch.num_gpus=1 \
-        --launch.workspace=OLMo-modular \
-        --launch.priority=high -- src/scripts/train/OLMo2-tiny-train.py test-run01 --trainer.callbacks.profiler.enabled=false --train_module.optim.lr=2e-4
+        --launch.workspace=workspace-name \
+        --launch.priority=high -- src/scripts/train/OLMo2-tiny-train.py test-run01 \
+            --trainer.callbacks.profiler.enabled=false \
+            --train_module.optim.lr=2e-4
     """
     main()
