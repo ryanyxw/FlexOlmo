@@ -53,7 +53,6 @@ from flexolmo.eval.evaluator_callback import DownstreamEvaluatorUpdatedCallbackC
 log = logging.getLogger(__name__)
 
 
-# TODO: maybe we don't need a separate config object for this.
 @dataclass
 class CommonComponents(Config):
     run_name: str
@@ -261,7 +260,7 @@ def build_experiment_config(
     freeze_embeddings: bool = False,
     model_config_builder: Callable[[CommonComponents], TransformerConfig],
     train_module_config_builder: Callable[[CommonComponents], TransformerTrainModuleConfig],
-    trainer_config_builder: Callable[[CommonComponents], TrainerConfig],
+    trainer_config_builder: Optional[Callable[[CommonComponents], TrainerConfig]] = None,
     dataset_config_builder: Optional[Callable[[CommonComponents], NumpyDatasetConfig]] = None,
     data_loader_config_builder: Optional[
         Callable[[CommonComponents], NumpyDataLoaderConfig]
@@ -280,7 +279,9 @@ def build_experiment_config(
 
     model = model_config_builder(common)
 
-    trainer = trainer_config_builder(common)
+    trainer = (
+        trainer_config_builder(common) if trainer_config_builder is not None else common.trainer
+    )
     for name, cb in common.callbacks.items():
         if name not in trainer.callbacks:
             trainer.add_callback(name, cb)
@@ -294,12 +295,30 @@ def build_experiment_config(
         else common.data_loader
     )
 
+    train_module = (
+        train_module_config_builder(common)
+        if train_module_config_builder is not None
+        else common.train_module
+    )
+
+    if model.freeze_params is not None and any(
+        ["embeddings." in param for param in model.freeze_params]
+    ):
+        log.warning("Embeddings are frozen, updating train_module optim group overrides.")
+        freeze_embeddings = True
+        assert isinstance(train_module.optim, AdamWConfig)
+        train_module.optim.group_overrides = (
+            []
+            if freeze_embeddings
+            else [OptimGroupOverride(params=["embeddings.weight"], opts=dict(weight_decay=0.0))]
+        )
+
     config = ExperimentConfig(
         run_name=run_name,
         model=model,
         dataset=dataset,
         data_loader=data_loader,
-        train_module=train_module_config_builder(common),
+        train_module=train_module,
         trainer=trainer,
     )
 
@@ -335,3 +354,11 @@ def build_experiment_config(
             config.dataset.mix = DataMix(config.dataset.mix)
 
     return config
+
+
+def print_model_params(config: ExperimentConfig):
+    print(
+        "\n"
+        f"[b blue]Total parameters:[/]         {config.model.num_params:,d} ({config.model.num_active_params:,d} active)\n"
+        f"[b blue]Non-embedding parameters:[/] {config.model.num_non_embedding_params:,d} ({config.model.num_active_non_embedding_params:,d} active)"
+    )
