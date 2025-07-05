@@ -51,7 +51,7 @@ def build_launch_config(
         workspace="ai2/OLMo-modular",
         clusters=[cluster],
         weka_buckets=weka_buckets,
-        beaker_image="shanea/olmo-torch23-gantry",
+        beaker_image="petew/olmo-core-tch260cu124",
         num_nodes=1,
         num_gpus=8,
         shared_filesystem=not is_url(root_dir),
@@ -128,16 +128,7 @@ def parse_args() -> Tuple[argparse.Namespace, List[str], List[str]]:
         "cmd", choices=["dry_run", "launch"], help="Command to execute: dry_run or launch"
     )
 
-    parser.add_argument("run_name", help="Run identifier (e.g., run01)")
-
     parser.add_argument("cluster", help="Name of the cluster to launch on")
-
-    # Optional checkpoint path
-    parser.add_argument(
-        "--checkpoint_path",
-        type=str,
-        help="Path to checkpoint file (use in case of anneal or finetune).",
-    )
 
     # Parse the filtered launch arguments
     parsed_args = parser.parse_args(filtered_launch_args)
@@ -145,12 +136,12 @@ def parse_args() -> Tuple[argparse.Namespace, List[str], List[str]]:
     return parsed_args, script_args, launch_overrides
 
 
-def update_command(script_command: List[str], run_name: str, cmd: str) -> List[str]:
+def update_command(script_command: List[str], cmd: str) -> List[str]:
     # TODO: Bit hacky
     if cmd == "dry_run":
-        return ["python"] + script_command[:1] + [cmd, run_name] + script_command[1:]
+        return ["python"] + script_command[:1] + ["dry_run"] + script_command[1:]
     elif cmd == "launch":
-        return script_command[:1] + ["train", run_name] + script_command[1:]
+        return script_command
     else:
         raise ValueError(f"Unknown command: {cmd}. Expected 'dry_run' or 'launch'.")
 
@@ -158,15 +149,19 @@ def update_command(script_command: List[str], run_name: str, cmd: str) -> List[s
 def main():
 
     args, script_command, launch_overrides = parse_args()
+    positional_script_args = [arg for arg in script_command[1:] if not arg.startswith("--")]
 
-    script_command = update_command(
-        script_command=script_command, run_name=args.run_name, cmd=args.cmd
-    )
+    assert (
+        len(positional_script_args) >= 1
+    ), "At least one positional argument (run name) is required in the script command (after -- )."
+    run_name = positional_script_args[0]
+
+    script_command = update_command(script_command=script_command, cmd=args.cmd)
 
     prepare_cli_environment()
 
     config = build_launch_config(
-        name=args.run_name,
+        name=run_name,
         command=script_command,
         cluster=args.cluster,
         overrides=launch_overrides,
@@ -189,10 +184,10 @@ if __name__ == "__main__":
 
     """
     # Example usage:
-    python src/scripts/beaker/launch.py [launch|dry_run] test1 ai2/jupiter-cirrascale-2 \
+    python src/scripts/beaker/launch.py [launch|dry_run] ai2/jupiter-cirrascale-2 \
         --launch.num_nodes=1 \
         --launch.num_gpus=1 \
         --launch.workspace=OLMo-modular \
-        --launch.priority=high -- src/scripts/train/OLMo2-tiny-train.py --trainer.callbacks.profiler.enabled=false --train_module.optim.lr=2e-4
+        --launch.priority=high -- src/scripts/train/OLMo2-tiny-train.py test-run01 --trainer.callbacks.profiler.enabled=false --train_module.optim.lr=2e-4
     """
     main()

@@ -362,3 +362,7 @@ def print_model_params(config: ExperimentConfig):
         f"[b blue]Total parameters:[/]         {config.model.num_params:,d} ({config.model.num_active_params:,d} active)\n"
         f"[b blue]Non-embedding parameters:[/] {config.model.num_non_embedding_params:,d} ({config.model.num_active_non_embedding_params:,d} active)"
     )
+
+
+def is_dry_run(arglist: List[str]) -> bool:
+    return arglist[1] == "--dry_run" or arglist[1] == "dry_run"

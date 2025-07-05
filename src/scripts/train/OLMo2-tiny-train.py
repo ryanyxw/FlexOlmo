@@ -24,15 +24,14 @@ from olmo_core.train import (
 from olmo_core.train.train_module import (
     TransformerTrainModuleConfig,
 )
-from olmo_core.utils import (
-    prepare_cli_environment,
-)
 from rich import print
 
 from flexolmo.internal.common import (
     CommonComponents,
     build_experiment_config,
     get_root_dir,
+    is_dry_run,
+    print_model_params,
 )
 from flexolmo.internal.model_utils import *  # noqa
 from flexolmo.internal.train_utils import train
@@ -82,12 +81,16 @@ def build_train_module_config(common: CommonComponents) -> TransformerTrainModul
 if __name__ == "__main__":
     print(sys.argv)
     if len(sys.argv) < 2:
-        print(f"Usage: torchrun [OPTS..] {sys.argv[0]} launch run_name [OVERRIDES...]")
+        print(f"Usage: torchrun [OPTS..] {sys.argv[0]} [dry_run] run_name [OVERRIDES...]")
         sys.exit(1)
 
-    cmd, run_name, *overrides = sys.argv[1:]
+    dry_run = is_dry_run(sys.argv)
 
-    prepare_cli_environment()
+    if dry_run:
+        _, run_name, *overrides = sys.argv[1:]
+    else:
+        run_name, *overrides = sys.argv[1:]
+        prepare_training_environment()
 
     try:
         config = build_experiment_config(
@@ -104,14 +107,9 @@ if __name__ == "__main__":
             train_module_config_builder=build_train_module_config,
         )
         print(config)
-        print(
-            "\n"
-            f"[b blue]Total parameters:[/]         {config.model.num_params:,d} ({config.model.num_active_params:,d} active)\n"
-            f"[b blue]Non-embedding parameters:[/] {config.model.num_non_embedding_params:,d} ({config.model.num_active_non_embedding_params:,d} active)"
-        )
-        if cmd == "dry_run":
+        print_model_params(config)
+        if dry_run:
             sys.exit(0)  # Exit early for dry run
-        prepare_training_environment()
         train(config)
     finally:
         teardown_training_environment()
