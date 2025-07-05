@@ -13,7 +13,7 @@ log = logging.getLogger(__name__)
 def parse_args():
     parser = ArgumentParser(description=__doc__)
     parser.add_argument("-i", "--checkpoint-input-dir", type=Path, required=True)
-    parser.add_argument("-u", "--unsharded-output-dir", type=Path, default=None)
+    parser.add_argument("-o", "-u", "--unsharded-output-dir", type=Path, default=None)
 
     return parser.parse_args()
 
