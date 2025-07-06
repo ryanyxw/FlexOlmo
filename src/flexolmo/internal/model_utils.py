@@ -1,4 +1,9 @@
-from olmo_core.nn.transformer import TransformerBlockType, TransformerConfig
+from olmo_core.nn.transformer import (
+    TransformerBlockType,
+    TransformerConfig,
+)
+
+from flexolmo.nn.moe.router import ExtendedMoERouterConfig, ExtendedMoERouterType
 
 
 def olmo2_tiny(cls, vocab_size: int, **kwargs) -> "TransformerConfig":
@@ -14,6 +19,9 @@ def olmo2_tiny(cls, vocab_size: int, **kwargs) -> "TransformerConfig":
         layer_norm_eps=1e-6,
         **kwargs,
     )
+
+
+TransformerConfig.olmo2_tiny = classmethod(olmo2_tiny)  # type: ignore
 
 
 def olmoe_nx7b(cls, vocab_size: int, **kwargs) -> "TransformerConfig":
@@ -38,5 +46,16 @@ def olmoe_nx7b(cls, vocab_size: int, **kwargs) -> "TransformerConfig":
     )
 
 
-TransformerConfig.olmo2_tiny = classmethod(olmo2_tiny)  # type: ignore
 TransformerConfig.olmoe_nx7b = classmethod(olmoe_nx7b)  # type: ignore
+
+
+def olmoe_nx7b_with_expert_bias(cls, vocab_size: int, **kwargs) -> "TransformerConfig":
+    model_config = cls.olmoe_nx7b(vocab_size=vocab_size, **kwargs)
+    # Overwrite the feed_forward_moe config to use expert bias
+    model_config.block.feed_forward_moe.router = ExtendedMoERouterConfig(
+        name=ExtendedMoERouterType.with_expert_bias, top_k=1  # type: ignore
+    )
+    return model_config
+
+
+TransformerConfig.olmoe_nx7b_with_expert_bias = classmethod(olmoe_nx7b_with_expert_bias)  # type: ignore
