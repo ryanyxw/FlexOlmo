@@ -2,6 +2,7 @@ import argparse
 import json
 import logging
 
+import numpy as np
 import torch
 from olmo_core.data.tokenizer import TokenizerConfig
 from olmo_core.distributed.checkpoint import save_state_dict
@@ -63,6 +64,10 @@ def load_state_dict(path: str):
     return state_dict
 
 
+def cosine_similarity(a, b):
+    return torch.sum(a * b) / (torch.norm(a) * torch.norm(b))
+
+
 def parse_args() -> argparse.Namespace:
 
     parser = argparse.ArgumentParser(
@@ -73,6 +78,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("-m", "--models", nargs="+", default=[])
     parser.add_argument(
         "-t", "--target", type=str, default=None, help="Target path to save the merged model"
+    )
+    parser.add_argument(
+        "-e",
+        "--embeddings",
+        nargs="+",
+        default=[],
+        help="Paths to the embeddings, to optionally seed the router (should follow the same order as models)",
     )
 
     parsed_args = parser.parse_args()
@@ -103,6 +115,28 @@ if __name__ == "__main__":
 
     dense_paths = args.models
     target_path = args.target
+    embeddings = args.embeddings
+
+    concat_embed = None
+
+    if len(embeddings) > 0:
+
+        embeds = []
+        for embed_path in embeddings:
+            log.info(f"Loading embedding from {embed_path}")
+            embeds.append(np.load(embed_path))
+
+        # concatenate the embeddings
+        concat_embed = np.concatenate(embeds, axis=0)
+        # make it a tensor
+        concat_embed = torch.from_numpy(concat_embed).float()
+
+        log.info(f"Considering {embeddings[0]} as public embeddings")
+
+        for i, embed_path in enumerate(embeddings[1:]):
+            print(
+                f"Cosine similarity between public and {embed_path}: {cosine_similarity(concat_embed[:4096], concat_embed[(i+1)*4096:(i+2)*4096])}"
+            )
 
     # load the MoE model config
     model_config = build_model_config(len(dense_paths))
@@ -158,12 +192,20 @@ if __name__ == "__main__":
                 if key in dense_state_dict:
                     if not torch.equal(moe_state_dict[key], dense_state_dict[key]):
                         log.info(f"{key} is different")
+                elif "router.weight" in key:
+                    if concat_embed is not None:
+                        log.warning(f"{key} copy domain embed")
+                        moe_state_dict[key] = concat_embed
+                    else:
+                        log.warning("No embeddings provided, skipping router weight copy")
+                elif "expert_bias" in key:
+                    log.warning(f"{key}: {moe_state_dict[key]}")
                 else:
                     log.warning(f"{key} equivalent not found in dense model")
 
     # save the final_state_dict for the MoE in a format that the olmo_core trainer likes
     save_state_dict(target_path, {"model": moe_state_dict})
-    torch.save(moe_state_dict, target_path + "_unsharded")
+    torch.save(moe_state_dict, target_path + "-unsharded/model.pt")
 
     log.info(f"Model saved to {target_path}")
     log.info("Done")
