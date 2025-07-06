@@ -82,12 +82,18 @@ class ExtendedMoERouterConfig(MoERouterConfig):
 
         return num_params
 
-    def build(self, *args, **kwargs):
+    # def build(self, *args, **kwargs):
+    def build(
+        self,
+        d_model: int,
+        num_experts,
+        **kwargs,
+    ):
         if self.dtype is not None:
             kwargs["dtype"] = self.dtype.as_pt()
         try:
             router_cls = RouterRegistry.get(self.name)
-            return router_cls(*args, **kwargs)
+            return router_cls(d_model=d_model, num_experts=num_experts, **kwargs)
         except TypeError as e:
             raise OLMoConfigurationError(
                 f"invalid options for '{self.name}' {self.__class__.__name__}, {e}"
