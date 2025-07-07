@@ -207,11 +207,11 @@ if __name__ == "__main__":
     log.info(f"Model saved to {target_path}")
 
     merged_config_dict["model"] = model_config.as_dict()
-    json.dump(
-        merged_config_dict,
-        open(target_path + "/config.json", "w"),
-        indent=2,
-        sort_keys=True,
+    merged_config_dict["run_name"] = (
+        f"merged_{model_config.block.feed_forward_moe.num_experts}_experts"
     )
+
+    with open(target_path + "/config.json", "w") as f:
+        json.dump(merged_config_dict, f)
     log.info(f"Config saved to {target_path}/config.json")
     log.info("Done")
