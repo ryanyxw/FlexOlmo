@@ -51,7 +51,10 @@ With domain embeddings for router for each individual expert (e.g. news)
 
 ```bash
 MODEL_PATH=/path/to/checkpoints/OLMo2-7B-anneal-public-mix/step11921
-python src/scripts/upcycle/dense_to_expert_moe.py -m ${MODEL_PATH}-unsharded ${MODEL_PATH}-unsharded -e /path/to/public/embeds /path/to/news/embeds -t /path/to/checkpoints/olmoe-2x7b-public-news
+python src/scripts/upcycle/dense_to_expert_moe.py \
+    -m ${MODEL_PATH}-unsharded ${MODEL_PATH}-unsharded \
+    -e /path/to/public/embeds /path/to/news/embeds \
+    -t /path/to/checkpoints/olmoe-2x7b-public-news
 ```
 
 
@@ -80,7 +83,9 @@ EXPERT_1=/path/to/expert1
 EXPERT_2=/path/to/expert2
 .
 .
-python src/scripts/upcycle/merge_experts_to_flexolmo.py -m ${PUBLIC_EXPERT}-unsharded -m ${EXPERT_1}-unsharded -m ${EXPERT_2}-unsharded [..OTHER EXPERTS]
+python src/scripts/upcycle/merge_experts_to_flexolmo.py \
+    -m ${PUBLIC_EXPERT}-unsharded -m ${EXPERT_1}-unsharded -m ${EXPERT_2}-unsharded [..OTHER EXPERTS]  \
+    -t /path/to/checkpoints/flex-3expert
 ```
 
 ### [Optional] Additional router training
