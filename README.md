@@ -36,14 +36,21 @@ FlexOlmo is built using [OLMo-core](https://github.com/allenai/OLMo-core.git). O
 
 [FlexOlmo-7x7B-1T](https://huggingface.co/allenai/FlexOlmo-7x7B-1T) (without router training) is a Mixture-of-Experts model with 33B total parameters, combining independently trained experts on public-mix, news, math, code, academic texts, creative writing, and Reddit data. The public-mix expert is trained on 1T tokens of public data while the other experts are branched from the public-mix expert and trained on 50B tokens of their respective data.
 
-| Corpus            | News           | Math          | Code           | Academic       | Creative Writing | Reddit         |
-|------------------|----------------|----------------|----------------|----------------|------------------|----------------|
-| Model            | [Flex-news-2x7B-1T](https://huggingface.co/allenai/Flex-news-2x7B-1T) | [Flex-math-2x7B-1T](https://huggingface.co/allenai/Flex-math-2x7B-1T) | [Flex-code-2x7B-1T](https://huggingface.co/allenai/Flex-code-2x7B-1T) | [Flex-pes2o-2x7B-1T](https://huggingface.co/allenai/Flex-pes2o-2x7B-1T) | [Flex-creative-2x7B-1T](https://huggingface.co/allenai/Flex-creative-2x7B-1T) | [Flex-reddit-2x7B-1T](https://huggingface.co/allenai/Flex-reddit-2x7B-1T) |
+| Model | Description |
+|-------|--------|
+| [Flex-news-2x7B-1T](https://huggingface.co/allenai/Flex-news-2x7B-1T) | News |
+| [Flex-math-2x7B-1T](https://huggingface.co/allenai/Flex-math-2x7B-1T) | Math |
+| [Flex-code-2x7B-1T](https://huggingface.co/allenai/Flex-code-2x7B-1T) | Code |
+| [Flex-pes2o-2x7B-1T](https://huggingface.co/allenai/Flex-pes2o-2x7B-1T) | Academic |
+| [Flex-creative-2x7B-1T](https://huggingface.co/allenai/Flex-creative-2x7B-1T) | Creative Writing |
+| [Flex-reddit-2x7B-1T](https://huggingface.co/allenai/Flex-reddit-2x7B-1T) | Reddit |
+| [FlexOlmo-7x7B-1T](https://huggingface.co/allenai/FlexOlmo-7x7B-1T) | Combined FlexOlmo model | 
+| [FlexOlmo-7x7B-1T-RT](https://huggingface.co/allenai/FlexOlmo-7x7B-1T) | Combined FlexOlmo model with optional router training on proxy mix| 
 
 
 ## Training scripts
 
-All training scripts can be found in [src/scripts/train](src/scripts/train/). These scripts are meant to be launched with `torchrun`.
+All python training scripts can be found in [src/scripts/train](src/scripts/train/). These scripts are meant to be launched with `torchrun`.
 The scripts can also be [launched with beaker](src/scripts/beaker/).
 
 
@@ -67,5 +74,7 @@ The scripts can also be [launched with beaker](src/scripts/beaker/).
 
 
 ## Citation
+
+Scripts for experiments in the paper can be found in [scripts](scripts/).
 
 Coming soon
