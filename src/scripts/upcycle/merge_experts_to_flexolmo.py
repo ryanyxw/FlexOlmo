@@ -129,10 +129,13 @@ if __name__ == "__main__":
     log.info("Model loaded on cpu")
     moe_state_dict = model.state_dict()
 
+    merged_config_dict = {}
     for expert, path in enumerate(expert_paths):
         log.info(f"Loading model from {path} as expert {expert}")
         with open(path + "/config.json") as f:
             config = json.load(f)
+        if expert == 0:
+            merged_config_dict = config
 
         expert_state_dict = load_state_dict(path)
         # bp()
@@ -202,4 +205,13 @@ if __name__ == "__main__":
     # save the final_state_dict for the MoE in a format that the olmo_core trainer likes
     save_state_dict(target_path, {"model": moe_state_dict})
     log.info(f"Model saved to {target_path}")
+
+    merged_config_dict["model"] = model_config.as_dict()
+    json.dump(
+        merged_config_dict,
+        open(target_path + "/config.json", "w"),
+        indent=2,
+        sort_keys=True,
+    )
+    log.info(f"Config saved to {target_path}/config.json")
     log.info("Done")
