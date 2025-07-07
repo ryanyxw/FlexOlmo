@@ -28,21 +28,22 @@ def olmoe_nx7b(cls, vocab_size: int, **kwargs) -> "TransformerConfig":
     # Possibly more OOM due to imbalance with dropless=True
     dropless = kwargs.pop("dropless", False)
     return cls.llama_like_moe(
-        d_model=4096,
-        n_layers=32,
-        n_heads=32,
-        num_experts=2,  # NOTE: if increasing this you may need to enable EP or TP
-        top_k=1,
-        expert_hidden_size=11008,
+        d_model=kwargs.pop("d_model", 4096),
+        n_layers=kwargs.pop("n_layers", 32),
+        n_heads=kwargs.pop("n_heads", 32),
+        num_experts=kwargs.pop("num_experts", 2),
+        top_k=kwargs.pop("top_k", 1),
+        expert_hidden_size=kwargs.pop("expert_hidden_size", 11008),
         vocab_size=vocab_size,
         dropless=dropless,
         capacity_factor=None if dropless else 1.2,  # adjust as needed
-        lb_loss_weight=0.01,
-        z_loss_weight=0.001,
-        reordered_norm=True,
-        qk_norm=True,
-        rope_theta=500_000,
-        layer_norm_eps=1e-6,
+        lb_loss_weight=kwargs.pop("lb_loss_weight", 0.01),
+        z_loss_weight=kwargs.pop("z_loss_weight", 0.001),
+        reordered_norm=kwargs.pop("reordered_norm", True),
+        qk_norm=kwargs.pop("qk_norm", True),
+        rope_theta=kwargs.pop("rope_theta", 500_000),
+        layer_norm_eps=kwargs.pop("layer_norm_eps", 1e-6),
+        **kwargs,
     )
 
 
