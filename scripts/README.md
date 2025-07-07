@@ -81,17 +81,28 @@ torchrun --nproc-per-node=8 src/scripts/train/OLMoE-2x7B-anneal.py olmoe-2x7B-ne
 PUBLIC_EXPERT=/path/to/public/expert
 EXPERT_1=/path/to/expert1
 EXPERT_2=/path/to/expert2
+EXPERT_3=/path/to/expert3
 .
 .
 python src/scripts/upcycle/merge_experts_to_flexolmo.py \
     -m ${PUBLIC_EXPERT}-unsharded -m ${EXPERT_1}-unsharded -m ${EXPERT_2}-unsharded [..OTHER EXPERTS]  \
-    -t /path/to/checkpoints/flex-3expert
+    -t /path/to/checkpoints/FlexOlmo-4x7B
 ```
 
-### [Optional] Additional router training
+## [Optional] Additional router training on proxy data
 
 ```bash
-torchrun ...
+torchrun --nproc-per-node=8 src/scripts/train/OLMoE-4x7B.py FlexOlmo-4x7B-RT \
+    --trainer.callbacks.profiler.enabled=true \
+    --dataset.mix_base_dir=/path/to/tokenized/data \
+    --dataset.mix=proxy_combined_public_math_code_news \
+    --trainer.max_duration.value=5_000_000_000 \
+    --trainer.max_duration.unit=tokens \
+    --trainer.load_path=/path/to/checkpoints/FlexOlmo-4x7B \
+    --model.block.feed_forward_moe.router.top_k=4 \
+    --train_module.rank_microbatch_size=4096 \
+    --train_module.scheduler.warmup_steps=100 \
+    --train_module.optim.lr=2e-3
 ```
 
 ## Evaluation
