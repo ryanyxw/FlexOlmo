@@ -44,6 +44,7 @@ FlexOlmo is built using [OLMo-core](https://github.com/allenai/OLMo-core.git). O
 ## Training scripts
 
 All training scripts can be found in [src/scripts/train](src/scripts/train/). These scripts are meant to be launched with `torchrun`.
+The scripts can also be [launched with beaker](src/scripts/beaker/).
 
 
 ### Evaluation
@@ -67,4 +68,4 @@ All training scripts can be found in [src/scripts/train](src/scripts/train/). Th
 
 ## Citation
 
-TBD
+Coming soon
