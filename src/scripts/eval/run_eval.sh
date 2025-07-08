@@ -73,7 +73,6 @@ for TASK in "${TASKS[@]}"; do
 	--model-type hf \
 	--task $TASK \
 	--limit 1000 \
-	--model-type vllm \
 	--output-dir ${BASE_OUTPUT_DIR}/${MODEL} \
 	--batch-size $batch_size \
 	--gpus $GPUS
