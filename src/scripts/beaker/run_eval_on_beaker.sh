@@ -1,10 +1,10 @@
 MODEL_NAME=$1 #allenai/FlexOlmo-7x7B-1T-RT
 TASK_NAME=$2 #mc9
-BASE_OUTPUT_DIR=$3 /path/to/eval_results
+BASE_OUTPUT_DIR=$3 #/path/to/eval_results
 GPUS=$4 #2
 
 gantry run \
-    --name eval-${MODEL_NAME}-${TASK_NAME} \
+    --name eval-${MODEL_NAME//\//-}-${TASK_NAME} \
     --weka oe-training-default:/weka/oe-training-default \
     --install "bash src/scripts/eval/setup_eval_env.sh;" \
     --budget ai2/oe-training \
