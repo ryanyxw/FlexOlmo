@@ -450,7 +450,7 @@ Apache License
 babel 2.17.0 - BSD
 https://babel.pocoo.org/
 
-BSD License
+BSD 3-Clause License
 
 Copyright (c) 2013-2025 by the Babel Team, see AUTHORS for more information.
 
@@ -485,7 +485,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 backports.tarfile 1.2.0 - MIT
 https://github.com/jaraco/backports.tarfile
 
-"MIT License
+MIT License
 
 Copyright (c) 2025 Jason R. Coombs
 
