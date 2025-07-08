@@ -55,7 +55,7 @@ try:
         push_internal_datalake,
     )
 except ImportError:
-    add_internal_launch_args = lambda *x: None  # noqa: E731
+    add_internal_run_eval_args = lambda *x: None  # noqa: E731
     process_internal_compute_config = lambda *x: None  # noqa: E731
 
 
