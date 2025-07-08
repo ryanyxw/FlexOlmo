@@ -368,7 +368,6 @@ def launch_eval(args_dict: dict):
     if model_name != "none":
         run_eval_args["model"] = model_name
     if model_config:
-        model_config["hf_token"] = True
         run_eval_args["model-args"] = model_config
 
     run_eval_command = make_cli_command("python -m offline_evals.run_eval", run_eval_args)
