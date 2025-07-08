@@ -1,4 +1,5 @@
 # import easyapi
+import logging
 import os
 
 import torch
@@ -6,7 +7,15 @@ from datasets import Dataset
 from tqdm import tqdm
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 from transformers.pipelines.pt_utils import KeyDataset
-from vllm import LLM, SamplingParams
+
+try:
+    from vllm import LLM, SamplingParams
+except ImportError:
+    print("Warning: vllm is not installed.")
+    LLM = None
+    SamplingParams = None
+
+log = logging.getLogger(__name__)
 
 
 class LanguageModel(object):
@@ -18,6 +27,12 @@ class LanguageModel(object):
         max_input_len=None,
         enable_chunked_prefill=True,
     ):
+        if model_type == "vllm" and LLM is None:
+            model_type = "hf"
+            log.warning(
+                "vllm is not installed. Using transformers instead. "
+                "Install vllm to use it as the model backend."
+            )
         self.model_name = model_name
         self.model_type = model_type
 
@@ -39,7 +54,7 @@ class LanguageModel(object):
 
     def load_model(self, **kwargs):
         if not self.llm:
-            if self.model_type == "vllm":
+            if self.model_type == "vllm" and LLM is not None:
                 if self.model_name.startswith("allenai/"):
                     self.max_input_len = 4096
                 if self.max_input_len:
@@ -90,7 +105,7 @@ class LanguageModel(object):
                             break
             print(f"{cnt}/{len(inputs)} inputs got truncated!")
 
-        if self.model_type == "vllm":
+        if self.model_type == "vllm" and SamplingParams is not None:
             sampling_params_dict = {"temperature": temperature, "max_tokens": max_output_length}
             if self.model_name.startswith("allenai/"):
                 sampling_params_dict["truncate_prompt_tokens"] = 4096 - 10

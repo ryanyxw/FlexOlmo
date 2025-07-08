@@ -69,9 +69,7 @@ train = [
 eval = [
     "ai2-olmes@git+https://github.com/allenai/olmes.git",
     "s3fs",
-    "smart-open",
-    "vllm==0.7.0",
-    "transformers@git+https://github.com/swj0419/transformers"
+    "smart-open"
 ]
 extraction = [
     "accelerate",

@@ -59,6 +59,10 @@ else
 fi
 
 
+# TODO: remove once merged
+# Override transformers and vllm versions, bypassing pyproject conflicts with olmes.
+pip install vllm==0.7.0; pip uninstall transformers; pip install "transformers@git+https://github.com/swj0419/transformers"
+
 for TASK in "${TASKS[@]}"; do
 	# For setting the output_dir
 	model=$(echo $MODEL | cut -d'/' -f2)
