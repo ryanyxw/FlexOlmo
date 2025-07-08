@@ -12,10 +12,10 @@ The --base-dir argument can be:
 Usage:
     # Multiple models (parent directory)
     python print_evals.py --base-dir /path/to/evaluations/
-    
+
     # Single model (direct path)
     python print_evals.py --base-dir /path/to/evaluations/model1/
-    
+
     # S3 paths work the same way
     python print_evals.py --base-dir s3://bucket/evaluations/ --export-csv results.csv
 """
@@ -177,6 +177,7 @@ def _pathify(path: Union[Path, str]) -> Tuple[str, Path]:
 def join_path(protocol: Union[str, None], *parts: Union[str]) -> str:
     """Join a path from its protocol and path components."""
     from itertools import chain
+
     all_prots, all_parts = zip(
         *(_pathify(p) for p in chain.from_iterable([p] if isinstance(p, str) else p for p in parts))
     )
@@ -222,9 +223,6 @@ def glob_path(
         else:
             yield join_path(protocol, gl)
 
-# ============================================================================
-# MAIN SCRIPT FUNCTIONS
-# ============================================================================
 
 def map_mmlu_cat(subtask):
     subtask = subtask.split("mmlu_")[-1].split(":")[0]
@@ -288,7 +286,7 @@ def main(args):
         # Check if base_dir itself contains metrics files
         # if this is not empty, the user is likely looking at results for a single model in this directory
         direct_metrics = list(glob_path(os.path.join(args.base_dir, "task-*metrics.json")))
-        
+
         if direct_metrics:
             # base_dir is a model directory itself
             model_dirs = [args.base_dir]
@@ -309,9 +307,7 @@ def main(args):
             model_name = model_dir.split("/")[-1]
 
             # Find all metric files
-            metric_paths = list(
-                glob_path(os.path.join(model_dir, "task-*metrics.json"))
-            )
+            metric_paths = list(glob_path(os.path.join(model_dir, "task-*metrics.json")))
 
             if args.show_tasks:
                 show_tasks = args.show_tasks.split(",")
@@ -329,7 +325,7 @@ def main(args):
 
                 with smart_open.open(metric_path, "r") as f:
                     metric = json.load(f)
-                
+
                 task_name = metric["task_name"]
                 metrics = metric["metrics"]
                 score = metrics["primary_score"]
@@ -384,7 +380,7 @@ def main(args):
             for task_name in task_names
             if task_name.startswith("mmlu_") and not task_name.startswith("mmlu_pro_")
         ]
-        
+
         mmlu_cats = defaultdict(list)
         for task in mmlu_tasks:
             if args.avg_mmlu_cat:
@@ -429,7 +425,8 @@ def main(args):
 
     if args.avg_code:
         code_tasks = [
-            task_name for task_name in task_names 
+            task_name
+            for task_name in task_names
             if ("mbpp" in task_name or "codex" in task_name) and not task_name.endswith("@10")
         ]
         if code_tasks:
@@ -470,9 +467,7 @@ def main(args):
     if args.hide_models:
         hide_models = args.hide_models.split(",")
         results = {
-            key: value
-            for key, value in results.items()
-            if not any(m in key for m in hide_models)
+            key: value for key, value in results.items() if not any(m in key for m in hide_models)
         }
 
     # Prepare task list for display
@@ -505,9 +500,7 @@ def main(args):
     if args.hide_tasks:
         hide_tasks = args.hide_tasks.split(",")
         task_names = [
-            task_name
-            for task_name in task_names
-            if not any(t in task_name for t in hide_tasks)
+            task_name for task_name in task_names if not any(t in task_name for t in hide_tasks)
         ]
 
     if args.core_and_gen_only:
@@ -582,10 +575,11 @@ def main(args):
 
     # Export to CSV if requested
     if args.export_csv:
+
         def export_csv(results, task_names, model_names, args):
             with open(args.export_csv, "w", newline="") as csvfile:
                 writer = csv.writer(csvfile)
-                
+
                 if args.transpose:
                     header = ["Model"] + [format_task(name) for name in task_names]
                     writer.writerow(header)
@@ -604,7 +598,7 @@ def main(args):
                             value = results[m].get(task, None)
                             row.append(f"{value:.3f}" if value is not None else "-")
                         writer.writerow(row)
-            
+
             print(f"Exported results to {args.export_csv}")
 
         model_names = sorted(results.keys())
@@ -645,7 +639,7 @@ Examples:
 
   # Show only specific models and tasks
   python print_evals.py --show-models model1,model2 --show-tasks arc,boolq
-        """
+        """,
     )
 
     parser.add_argument(
@@ -653,28 +647,30 @@ Examples:
         "--base-dir",
         type=str,
         required=True,
-        help="Base directory path. Can be either: 1) A parent directory containing model folders, or 2) A single model directory with task-*metrics.json files"
+        help="Base directory path. Can be either: 1) A parent directory containing model folders, or 2) A single model directory with task-*metrics.json files",
     )
 
     parser.add_argument(
-        "-t", "--transpose", 
+        "-t",
+        "--transpose",
         action="store_true",
-        help="Transpose the table (models as rows, tasks as columns)"
+        help="Transpose the table (models as rows, tasks as columns)",
     )
-    
+
     parser.add_argument(
-        "-c", "--load-cache", 
-        action="store_true", 
-        help="Load results from cache without re-scanning directories"
+        "-c",
+        "--load-cache",
+        action="store_true",
+        help="Load results from cache without re-scanning directories",
     )
-    
+
     parser.add_argument(
         "-r",
         "--reset-cache",
         action="store_true",
         help="Clear cache and re-scan all directories",
     )
-    
+
     parser.add_argument(
         "--export-csv",
         type=str,
@@ -685,7 +681,9 @@ Examples:
     parser.add_argument("--avg-core", action="store_true", help="Average core 9 tasks")
     parser.add_argument("--avg-mmlu", action="store_true", help="Average MMLU tasks")
     parser.add_argument("--avg-mmlu-cat", action="store_true", help="Average MMLU by category")
-    parser.add_argument("--avg-mmlu-subcat", action="store_true", help="Average MMLU by subcategory")
+    parser.add_argument(
+        "--avg-mmlu-subcat", action="store_true", help="Average MMLU by subcategory"
+    )
     parser.add_argument("--avg-gen", action="store_true", help="Average generation tasks")
     parser.add_argument("--avg-mmlu-pro", action="store_true", help="Average MMLU Pro tasks")
     parser.add_argument("--avg-agi-eval", action="store_true", help="Average AGI Eval tasks")
@@ -694,19 +692,20 @@ Examples:
     parser.add_argument("--avg-ruler", action="store_true", help="Average RULER tasks")
     parser.add_argument("--avg-sciriff", action="store_true", help="Average SciRIFF tasks")
     parser.add_argument("--avg-code", action="store_true", help="Average coding tasks")
-    
+
     # Task filtering
     parser.add_argument("--stem-only", action="store_true", help="Show only STEM tasks")
     parser.add_argument("--code-only", action="store_true", help="Show only coding tasks")
     parser.add_argument("--hide-code", action="store_true", help="Hide coding tasks")
-    parser.add_argument("--core-and-gen-only", action="store_true", help="Show only core and generation tasks")
+    parser.add_argument(
+        "--core-and-gen-only", action="store_true", help="Show only core and generation tasks"
+    )
 
     # Model/task filtering
     parser.add_argument("--hide-models", help="Comma-separated list of model patterns to hide")
     parser.add_argument("--show-models", help="Comma-separated list of model patterns to show")
     parser.add_argument("--hide-tasks", help="Comma-separated list of task patterns to hide")
     parser.add_argument("--show-tasks", help="Comma-separated list of task patterns to show")
-
 
     args = parser.parse_args()
 
