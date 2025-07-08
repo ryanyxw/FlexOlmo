@@ -370,7 +370,10 @@ def launch_eval(args_dict: dict):
     if model_config:
         run_eval_args["model-args"] = model_config
 
-    run_eval_command = make_cli_command("python -m offline_evals.run_eval", run_eval_args)
+    run_eval_command = make_cli_command(
+        f"huggingface-cli login --token {os.environ['HF_TOKEN']} && python -m offline_evals.run_eval",
+        run_eval_args,
+    )
 
     if HAS_AI2_INTERNAL:
         run_eval_args.update(internal_args.get("internal_run_eval_args", {}))
