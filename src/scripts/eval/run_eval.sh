@@ -55,13 +55,8 @@ elif [[ $TASK_NAME == "code4" ]] ; then
 		mbppplus::none
 	)
 else
-	TASKS=($TASK)
+	TASKS=($TASK_NAME)
 fi
-
-
-# TODO: remove once merged
-# Override transformers and vllm versions, bypassing pyproject conflicts with olmes.
-pip install vllm==0.7.0; pip uninstall transformers; pip install "transformers@git+https://github.com/swj0419/transformers"
 
 for TASK in "${TASKS[@]}"; do
 	# For setting the output_dir
@@ -73,7 +68,7 @@ for TASK in "${TASKS[@]}"; do
 		batch_size=4
 	fi
 
-	PYTHONPATH=. python src/scripts/eval/launch.py \
+	PYTHONPATH=. python src/scripts/eval/launch_eval.py \
 	--model $MODEL \
 	--model-type hf \
 	--task $TASK \
