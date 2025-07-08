@@ -56,8 +56,8 @@ try:
     )
 except ImportError:
     add_internal_launch_args = lambda *x: None  # noqa: E731
-    launch_internal = lambda *x: None  # noqa: E731
-    process_internal_compute_config = lambda *x: {}  # noqa: E731
+    process_internal_compute_config = lambda *x: None  # noqa: E731
+
 
 from offline_evals import TASK_REGISTRY
 

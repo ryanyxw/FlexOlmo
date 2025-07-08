@@ -1,6 +1,5 @@
 import argparse
 import copy
-import inspect
 import logging
 import os
 import re
@@ -16,28 +15,6 @@ try:
 except ModuleNotFoundError:
     sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
     from oe_eval.configs.models import MODEL_CONFIGS
-
-# Check for Ai2 internal utilities handling compute resources
-try:
-    import oe_eval_internal  # noqa: F401
-except ModuleNotFoundError:
-    parent_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-    if os.path.exists(os.path.join(parent_dir, "oe_eval_internal")):
-        sys.path.insert(0, parent_dir)
-
-try:
-    # Override model configs with internal ones
-    from oe_eval_internal.configs.models import MODEL_CONFIGS
-    from oe_eval_internal.utilities.launch_utils import (
-        add_internal_launch_args,
-        process_internal_args,
-    )
-
-    from offline_evals.launch_utils import launch_internal
-except ModuleNotFoundError:
-    add_internal_launch_args = lambda *x: None  # noqa: E731
-    launch_internal = lambda *x: None  # noqa: E731
-    process_internal_args = lambda *x: {}  # noqa: E731
 
 from oe_eval.configs.utils import (
     short_model_description,
@@ -55,8 +32,8 @@ from oe_eval.utils import (
 
 # from oe_eval.configs.task_suites import TASK_SUITE_CONFIGS
 # from oe_eval.configs.tasks import TASK_CONFIGS
-from .task_suites import get_task_suite_configs
-from .tasks import get_task_configs
+from src.scripts.eval.task_suites import get_task_suite_configs
+from src.scripts.eval.tasks import get_task_configs
 
 TASK_SUITE_CONFIGS = get_task_suite_configs()
 TASK_CONFIGS = get_task_configs()
@@ -171,13 +148,6 @@ _parser.add_argument(
     default=1,
     help="Number of workers.",
 )
-## Internal Ai2 arguments added:
-HAS_AI2_INTERNAL = (
-    inspect.getmodule(add_internal_launch_args).__name__  # type: ignore
-    == "oe_eval_internal.utilities.launch_utils"
-)
-if HAS_AI2_INTERNAL:
-    add_internal_launch_args(_parser)
 
 
 logging.basicConfig(format="%(asctime)s [%(levelname)s] %(message)s", level=logging.INFO)
@@ -336,13 +306,6 @@ def launch_eval(args_dict: dict):
     # gpus = args_dict.get("gpus", 0)
     batch_size = args_dict.get("batch_size", 16)
 
-    # Get extra args for Ai2 internal compute resources
-    if HAS_AI2_INTERNAL:
-        internal_args = process_internal_args(
-            args_dict, model_config, model_gantry_args, task_configs, tasks
-        )
-        batch_size = internal_args.get("batch_size", batch_size)
-
     model_name = model_config.pop("model")
     run_eval_args = {
         "task": task_configs,
@@ -370,18 +333,7 @@ def launch_eval(args_dict: dict):
     if model_config:
         run_eval_args["model-args"] = model_config
 
-    if HAS_AI2_INTERNAL:
-        run_eval_args.update(internal_args.get("internal_run_eval_args", {}))
-
     run_eval_command = make_cli_command("python -m offline_evals.run_eval", run_eval_args)
-
-    internal_args["gantry_args"][
-        "install"
-        # ] += "; pip uninstall -y transformers; pip install 'transformers@git+https://github.com/2015aroras/transformers@shanea/olmoe2'; pip install torch==2.4.0 torchvision==0.19.0"
-    ] += "; pip uninstall -y transformers; pip install 'transformers@git+https://github.com/swj0419/transformers'; pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124; pip install ipdb"
-
-    if HAS_AI2_INTERNAL:
-        return launch_internal(args_dict, run_eval_command, internal_args, len(all_tasks))
 
     if args_dict["dry_run"]:
         logger.info(f"Command: {run_eval_command}")

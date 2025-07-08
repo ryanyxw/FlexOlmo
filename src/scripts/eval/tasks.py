@@ -10,7 +10,7 @@ def get_task_configs():
                 "use_chat_format": False,
                 "context_kwargs": {
                     "prompt_variant": "evalplus",
-                    "assistant_prefix": "\nBelow is a Python script with a self-contained function that solves the problem and passes corresponding tests:\n```python\n",
+                    "assistant_prefix": "\nYou are a helpful and precise coding assistant. For every coding task, you generate clean, self-contained Python code. Below is a function that correctly solves the coding problem and passes the relevant tests:\n```python\n",
                 },
                 "generation_kwargs": {
                     "stop_sequences": ["```", '\n"""', "\nassert", "\n#"],
@@ -49,7 +49,7 @@ def get_task_configs():
                 "use_chat_format": False,
                 "context_kwargs": {
                     "prompt_variant": "evalplus",
-                    "assistant_prefix": "\nBelow is a Python script with a self-contained function that solves the problem and passes corresponding tests:\n```python\n",
+                    "assistant_prefix": "\nYou are a helpful and precise coding assistant. For every coding task, you generate clean, self-contained Python code. Below is a function that correctly solves the above problem and passes the relevant tests:\n```python\n",
                 },
                 "generation_kwargs": {
                     "stop_sequences": ["```", '\n"""', "\nassert", "\n#"],
@@ -211,6 +211,10 @@ def get_task_configs():
                 "metric_kwargs": {
                     "pass_at_ks": [1, 10],
                 },
+                "context_kwargs": {
+                    "prompt_variant": "evalplus",
+                    "answer_prefix": "Below is the completed function for this coding task:\n\n```python\n",
+                },
                 "metadata": {
                     "regimes": [],
                 },
@@ -241,6 +245,10 @@ def get_task_configs():
                     "top_p": 0.95,
                     "temperature": 0.8,
                     "repeats": 10,
+                },
+                "context_kwargs": {
+                    "prompt_variant": "evalplus",
+                    "answer_prefix": "Below is the completed function for this coding task:\n\n```python\n",
                 },
                 "metric_kwargs": {
                     "pass_at_ks": [1, 10],

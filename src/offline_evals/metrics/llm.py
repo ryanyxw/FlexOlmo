@@ -6,20 +6,14 @@ from datasets import Dataset
 from tqdm import tqdm
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 from transformers.pipelines.pt_utils import KeyDataset
-
-try:
-    from vllm import LLM, SamplingParams
-except ImportError:
-    print("vLLM is not installed, using Hugging Face transformers instead.")
-    LLM = None
-    SamplingParams = None
+from vllm import LLM, SamplingParams
 
 
 class LanguageModel(object):
     def __init__(
         self,
         model_name,
-        model_type="hf",
+        model_type="vllm",
         device="cuda:0",
         max_input_len=None,
         enable_chunked_prefill=True,
@@ -45,7 +39,7 @@ class LanguageModel(object):
 
     def load_model(self, **kwargs):
         if not self.llm:
-            if self.model_type == "vllm" and LLM is not None:
+            if self.model_type == "vllm":
                 if self.model_name.startswith("allenai/"):
                     self.max_input_len = 4096
                 if self.max_input_len:
@@ -96,7 +90,7 @@ class LanguageModel(object):
                             break
             print(f"{cnt}/{len(inputs)} inputs got truncated!")
 
-        if self.model_type == "vllm" and SamplingParams is not None:
+        if self.model_type == "vllm":
             sampling_params_dict = {"temperature": temperature, "max_tokens": max_output_length}
             if self.model_name.startswith("allenai/"):
                 sampling_params_dict["truncate_prompt_tokens"] = 4096 - 10
