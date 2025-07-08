@@ -70,7 +70,8 @@ eval = [
     "ai2-olmes@git+https://github.com/allenai/olmes.git",
     "s3fs",
     "smart-open",
-    "torchvision"
+    "torchvision",
+    "prettytable"
 ]
 extraction = [
     "accelerate",
