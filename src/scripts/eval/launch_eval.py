@@ -371,7 +371,7 @@ def launch_eval(args_dict: dict):
         run_eval_args["model-args"] = model_config
 
     run_eval_command = make_cli_command(
-        f"huggingface-cli login --token {os.environ['HF_TOKEN']} && python -m offline_evals.run_eval",
+        "python -m offline_evals.run_eval",
         run_eval_args,
     )
 
@@ -392,7 +392,9 @@ def launch_eval(args_dict: dict):
     # Only local eval is supported
     logger.info(f"Running eval locally on {len(all_tasks)} tasks!")
     logger.info(f"Command: {run_eval_command}")
-    return subprocess.run(run_eval_command, shell=True).returncode
+    return subprocess.run(
+        f"huggingface-cli login --token {os.environ['HF_TOKEN']} && {run_eval_command}", shell=True
+    ).returncode
 
 
 def main():

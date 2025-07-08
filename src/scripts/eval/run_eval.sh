@@ -1,6 +1,6 @@
 #! /bin/bash
 
-## example use: bash src/scripts/eval/run_eval.sh allenai/Flex-public-7B-1T mc9 s3://ai2-llm/evaluation/OLMo-modular/final 1
+## example use: bash src/scripts/eval/run_eval.sh allenai/Flex-public-7B-1T mc9 eval_results/ 1
 
 MODEL=$1
 TASK_NAME=$2
