@@ -72,7 +72,7 @@ for TASK in "${TASKS[@]}"; do
 	--model $MODEL \
 	--model-type hf \
 	--task $TASK \
-	--limit 100 \
+	--limit 1000 \
 	--output-dir ${BASE_OUTPUT_DIR}/${MODEL} \
 	--batch-size $batch_size \
 	--gpus $GPUS
