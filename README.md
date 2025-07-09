@@ -65,7 +65,15 @@ bash src/scripts/eval/run_eval.sh allenai/FlexOlmo-7x7B-1T mc9 eval_results/ ${N
 ```
 
 ```bash
-python src/scripts/eval/print_evals.py --base-dir eval_results/ --avg-core --avg-gen --avg-mmlu --avg-mmlu-pro --avg-agi-eval --avg-math2 --avg-sciriff --avg-code
+python src/scripts/eval/print_evals.py \
+  --base-dir eval_results/ \
+  --avg-core \
+  --avg-gen \
+  --avg-mmlu \
+  --avg-mmlu-pro \
+  --avg-agi-eval \
+  --avg-sciriff \
+  --avg-code
 ```
 
 
