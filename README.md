@@ -11,8 +11,8 @@
   <a href="https://allenai.org/blog/flexolmo">
     <img alt="Blog Post" src="https://img.shields.io/badge/FlexOlmo-blog-F0529C">
   </a>
-  <a href="">
-    <img alt="Paper URL" src="https://img.shields.io/badge/arxiv-blue">
+  <a href="https://allenai.org/papers/FlexOlmo">
+    <img alt="Paper URL" src="https://img.shields.io/badge/FlexOlmo-arxiv-blue">
   </a>
   <a href="https://huggingface.co/collections/allenai/flexolmo-68471177a386b6e20a54c55f">
     <img alt="Model Checkpoints" src="https://img.shields.io/badge/%F0%9F%A4%97%20HF-Models-yellow">
@@ -106,7 +106,7 @@ Scripts for experiments in the paper can be found in [scripts](scripts/).
       eprint={2507.00000},
       archivePrefix={arXiv},
       primaryClass={cs.CL},
-      url={http://allenai-web/papers/FlexOlmo}, 
+      url={https://allenai.org/papers/FlexOlmo}, 
 }
 ```
 
