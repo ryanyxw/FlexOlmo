@@ -231,7 +231,7 @@ class MoELinearRouterWithExpertBias(MoERouterWithExpertBias):
 
     def reset_parameters(self) -> None:
         super().reset_parameters()
-        nn.init.trunc_normal_(self.weight, std=0.02, a=-3 * 0.02, b=3 * 0.02)
+        nn.init.trunc_normal_(self.weight, std=0.002, a=-3 * 0.002, b=0)
 
     def extra_repr(self):
         return f"in_features={self.d_model}, num_experts={self.num_experts}"

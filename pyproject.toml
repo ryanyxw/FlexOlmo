@@ -73,7 +73,14 @@ eval = [
     "torchvision",
     "prettytable"
 ]
+embeddings =[
+    "gritlm",
+    "sentence_transformers",
+    "s3fs",
+    "smart-open",
+]
 extraction = [
+    "transformers@git+https://github.com/swj0419/transformers",
     "accelerate",
     "rank_bm25",
     "s3fs",
@@ -81,10 +88,11 @@ extraction = [
     "strsimpy",
     "psutil",
     "platformdirs",
-    "zstandard"
+    "zstandard",
+    "torchvision"
 ]
 all = [
-    "flexolmo[dev,beaker,wandb,train,eval,extraction]",
+    "flexolmo[dev,beaker,wandb,train,eval,embeddings,extraction]",
 ]
 
 [tool.setuptools]

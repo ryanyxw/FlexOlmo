@@ -2,6 +2,7 @@
   <!-- <img src="https://github.com/allenai/OLMo/assets/8812459/774ac485-a535-4768-8f7c-db7be20f5cc3" width="300"/> -->
   <img src="https://github.com/allenai/FlexOlmo/blob/main/assets/FlexOlmo_Logo.png" alt="FlexOlmo Logo" style="width: 600px; margin-left:'auto' margin-right:'auto' display:'block'"/>
   <br>
+  <br>
 </div>
 <p align="center">
   <a href="https://github.com/allenai/FlexOlmo/blob/main/LICENSE">
@@ -92,6 +93,8 @@ python src/scripts/eval/print_evals.py \
 | 🔥 **FlexOlmo-7x7B-1T** | **70.4** | **60.1** | **60.2** | **30.5** | 44.8 | 46.8 | 47.9 | **78.3** | 66.2 | 53.8 | 14.6 | 52.0 |
 | **FlexOlmo-7x7B-1T-RT** | 70.3 | 60.0 | **60.2** | 30.3 | **45.2** | **47.2** | 47.7 | 77.2 | **67.6** | **53.9** | 13.3 | **52.2** |
 
+* The evaluation of the individual model refers to the dense model, not the 2x7B MoE model.
+
 Scripts for experiments in the paper can be found in [scripts](scripts/).
 
 # Citation
@@ -106,3 +109,4 @@ Scripts for experiments in the paper can be found in [scripts](scripts/).
       url={http://allenai-web/papers/FlexOlmo}, 
 }
 ```
+
