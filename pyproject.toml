@@ -73,6 +73,10 @@ eval = [
     "torchvision",
     "prettytable"
 ]
+embeddings =[
+    "gritlm",
+    "sentence_transformers"
+]
 extraction = [
     "accelerate",
     "rank_bm25",

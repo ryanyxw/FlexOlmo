@@ -6,11 +6,11 @@ export CHECKPOINTS=  # /path/to/checkpoints
 EXPERT=news
 
 # # With domain embeddings for router for each individual expert (e.g. news)
-# DOMAIN_EMBEDDINGS_ROOT="/path/to/domain/embeddings"
+# DOMAIN_EMBEDDINGS_ROOT="src/data/domain_embeddings/grit"
 # MODEL_PATH=${CHECKPOINTS}/OLMo2-7B-anneal-public-mix/step11921
 # python src/scripts/upcycle/dense_to_expert_moe.py \
 #     -m ${MODEL_PATH}-unsharded ${MODEL_PATH}-unsharded \
-#     -e /path/to/public/embeds /path/to/${EXPERT}/embeds \
+#     -e ${DOMAIN_EMBEDDINGS_ROOT}/public ${DOMAIN_EMBEDDINGS_ROOT}/${EXPERT} \
 #     -t /path/to/checkpoints/olmoe-2x7b-public-${EXPERT}
 
 MODEL_PATH=${CHECKPOINTS}/olmoe-2x7b-public-${EXPERT}  # upcycled from previous step
