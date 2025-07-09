@@ -45,7 +45,6 @@ runs:
         test -d .venv || virtualenv -p $(which python) --copies --reset-app-data .venv
         . .venv/bin/activate
         pip install 'torch${{ inputs.torch-version }}' --index-url https://download.pytorch.org/whl/cpu
-        pip install "oe-eval@git+https://${GITHUB_TOKEN}@github.com/allenai/oe-eval-internal#egg=main"
         pip install -e .[dev,beaker,wandb,train]  # not eval
 
     - if: steps.virtualenv-cache.outputs.cache-hit == 'true'
