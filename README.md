@@ -56,6 +56,19 @@ The scripts can also be [launched with beaker](src/scripts/beaker/).
 
 ### Evaluation
 
+Evaluations are built with [OLMES](https://github.com/allenai/olmes). They can be run as follows:
+
+```bash
+bash setup_eval_env.sh
+NUM_GPUS=2
+bash src/scripts/eval/run_eval.sh allenai/FlexOlmo-7x7B-1T mc9 eval_results/ ${NUM_GPUS}
+```
+
+```bash
+python src/scripts/eval/print_evals.py --base-dir eval_results/ --avg-core --avg-gen --avg-mmlu --avg-mmlu-pro --avg-agi-eval --avg-math2 --avg-sciriff --avg-code
+```
+
+
 | **Model** | **MC9** | **Gen5** | **MMLU** | **MMLU Pro** | **AGIEval** | **BBH** | **Math2** | **NewsG** | **PoemG** | **SciRIFF5** | **Code4** | **Avg.** |
 |----------|--------|----------|----------|--------------|-------------|---------|-----------|-----------|-----------|--------------|-----------|----------|
 | Prev. Public model | 68.7 | 58.8 | 55.9 | 26.2 | 39.9 | 35.7 | 8.2 | 76.0 | 47.8 | 48.1 | 1.1 | 42.4 |

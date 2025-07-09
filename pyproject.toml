@@ -67,10 +67,11 @@ train = [
     "protobuf==5.29.4"
 ]
 eval = [
-    #"oe-eval@git+https://github.com/allenai/oe-eval-internal@fc26899fe4a1dafbc5073e275085b876dce2744b",
     "ai2-olmes@git+https://github.com/allenai/olmes.git",
     "s3fs",
-    "smart-open"
+    "smart-open",
+    "torchvision",
+    "prettytable"
 ]
 extraction = [
     "accelerate",
