@@ -1,6 +1,6 @@
 <div align="center">
   <!-- <img src="https://github.com/allenai/OLMo/assets/8812459/774ac485-a535-4768-8f7c-db7be20f5cc3" width="300"/> -->
-  <img src="https://github.com/allenai/FlexOlmo/blob/main/assets/FlexOlmo_Logo.png" alt="FlexOlmo Logo" style="margin-left:'auto' margin-right:'auto' display:'block'"/>
+  <img src="https://github.com/allenai/FlexOlmo/blob/main/assets/FlexOlmo_Logo.png" alt="FlexOlmo Logo" style="width: 600px; margin-left:'auto' margin-right:'auto' display:'block'"/>
   <br>
 </div>
 <p align="center">
@@ -92,9 +92,17 @@ python src/scripts/eval/print_evals.py \
 | 🔥 **FlexOlmo-7x7B-1T** | **70.4** | **60.1** | **60.2** | **30.5** | 44.8 | 46.8 | 47.9 | **78.3** | 66.2 | 53.8 | 14.6 | 52.0 |
 | **FlexOlmo-7x7B-1T-RT** | 70.3 | 60.0 | **60.2** | 30.3 | **45.2** | **47.2** | 47.7 | 77.2 | **67.6** | **53.9** | 13.3 | **52.2** |
 
-
-## Citation
-
 Scripts for experiments in the paper can be found in [scripts](scripts/).
 
-Coming soon.
+# Citation
+```bibtex
+@misc{flexolmo,
+      title={FlexOlmo: Open Language Models for Flexible Data Use}, 
+      author={Weijia Shi and Akshita Bhagia and Kevin Farhat and Niklas Muennighoff and Jacob Morrison and Evan Pete Walsh and Dustin Schwenk and Shayne Longpre and Jake Poznanski and Allyson Ettinger and Daogao Liu and Margaret Li and Mike Lewis and Wen-tau Yih and Dirk Groeneveld and Luca Soldaini and Kyle Lo and Noah A. Smith and Luke Zettlemoyer and Pang Wei Koh and Hannaneh Hajishirzi and Ali Farhadi and Sewon Min},
+      year={2025},
+      eprint={2507.00000},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={http://allenai-web/papers/FlexOlmo}, 
+}
+```
