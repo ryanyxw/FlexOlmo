@@ -101,7 +101,7 @@ Example scripts for experiments in the paper can be found in [scripts](scripts/)
 ```bibtex
 @misc{flexolmo,
       title={FlexOlmo: Open Language Models for Flexible Data Use}, 
-      author={Weijia Shi and Akshita Bhagia and Kevin Farhat and Niklas Muennighoff and Jacob Morrison and Evan Pete Walsh and Dustin Schwenk and Shayne Longpre and Jake Poznanski and Allyson Ettinger and Daogao Liu and Margaret Li and Mike Lewis and Wen-tau Yih and Dirk Groeneveld and Luca Soldaini and Kyle Lo and Noah A. Smith and Luke Zettlemoyer and Pang Wei Koh and Hannaneh Hajishirzi and Ali Farhadi and Sewon Min},
+      author={Weijia Shi and Akshita Bhagia and Kevin Farhat and Niklas Muennighoff and Pete Walsh and Jacob Morrison and Dustin Schwenk and Shayne Longpre and Jake Poznanski and Allyson Ettinger and Daogao Liu and Margaret Li and Mike Lewis and Wen-tau Yih and Dirk Groeneveld and Luca Soldaini and Kyle Lo and Noah A. Smith and Luke Zettlemoyer and Pang Wei Koh and Hannaneh Hajishirzi and Ali Farhadi and Sewon Min},
       year={2025},
       eprint={2507.00000},
       archivePrefix={arXiv},
