@@ -1,6 +1,6 @@
 <div align="center">
   <!-- <img src="https://github.com/allenai/OLMo/assets/8812459/774ac485-a535-4768-8f7c-db7be20f5cc3" width="300"/> -->
-  <img src="https://github.com/allenai/FlexOlmo/blob/main/assets/FlexOlmo_Logo.png" alt="FlexOlmo Logo" width=500 style="margin-left:'auto' margin-right:'auto' display:'block'"/>
+  <img src="https://github.com/allenai/FlexOlmo/blob/main/assets/FlexOlmo_Logo.png" alt="FlexOlmo Logo" style="width: 600px; margin-left:'auto' margin-right:'auto' display:'block'"/>
   <br>
   <br>
 </div>
@@ -95,10 +95,18 @@ python src/scripts/eval/print_evals.py \
 
 * The evaluation of the individual model refers to the dense model, not the 2x7B MoE model.
 
-
-
-## Citation
-
 Scripts for experiments in the paper can be found in [scripts](scripts/).
 
-Coming soon.
+# Citation
+```bibtex
+@misc{flexolmo,
+      title={FlexOlmo: Open Language Models for Flexible Data Use}, 
+      author={Weijia Shi and Akshita Bhagia and Kevin Farhat and Niklas Muennighoff and Jacob Morrison and Evan Pete Walsh and Dustin Schwenk and Shayne Longpre and Jake Poznanski and Allyson Ettinger and Daogao Liu and Margaret Li and Mike Lewis and Wen-tau Yih and Dirk Groeneveld and Luca Soldaini and Kyle Lo and Noah A. Smith and Luke Zettlemoyer and Pang Wei Koh and Hannaneh Hajishirzi and Ali Farhadi and Sewon Min},
+      year={2025},
+      eprint={2507.00000},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={http://allenai-web/papers/FlexOlmo}, 
+}
+```
+
