@@ -2,6 +2,7 @@
   <!-- <img src="https://github.com/allenai/OLMo/assets/8812459/774ac485-a535-4768-8f7c-db7be20f5cc3" width="300"/> -->
   <img src="https://github.com/allenai/FlexOlmo/blob/main/assets/FlexOlmo_Logo.png" alt="FlexOlmo Logo" width=500 style="margin-left:'auto' margin-right:'auto' display:'block'"/>
   <br>
+  <br>
 </div>
 <p align="center">
   <a href="https://github.com/allenai/FlexOlmo/blob/main/LICENSE">
