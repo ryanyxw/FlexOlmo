@@ -35,7 +35,9 @@ The code should print how many data points from the training data were successfu
 
 
 def load_resources(args):
-    source_data = load_data(args.domain, args.source_data, p=0.01)
+    source_data = load_data(
+        args.domain, args.source_data, p=0.01, debug=False
+    )  # debug=True to load a small sample for testing
     np.random.seed(2025)
     np.random.shuffle(source_data)
 
@@ -143,7 +145,7 @@ def main(args):
                 orig = tokenizer.decode(orig_input_ids[0], skip_special_tokens=True)
 
                 generated_samples = model.generate(
-                    prefix_input_ids.to("cuda"),
+                    prefix_input_ids.to(model.device),
                     max_length=generation_length,
                     do_sample=True,
                     top_k=args.top_k,
