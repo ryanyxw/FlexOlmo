@@ -4,7 +4,7 @@
 
 MODEL=$1
 TASK_NAME=$2
-BASE_OUTPUT_DIR=$3
+OUTPUT_DIR=$3
 GPUS=$4
 
 
@@ -68,12 +68,12 @@ for TASK in "${TASKS[@]}"; do
 		batch_size=4
 	fi
 
-	PYTHONPATH=. python src/scripts/eval/launch_eval.py \
+	PYTHONPATH=./FlexOlmo python src/scripts/eval/launch_eval.py \
 	--model $MODEL \
 	--model-type hf \
 	--task $TASK \
 	--limit 1000 \
-	--output-dir ${BASE_OUTPUT_DIR}/${MODEL} \
+	--output-dir $OUTPUT_DIR \
 	--batch-size $batch_size \
 	--gpus $GPUS
 done
