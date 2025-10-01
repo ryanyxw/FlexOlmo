@@ -68,7 +68,7 @@ for TASK in "${TASKS[@]}"; do
 		batch_size=4
 	fi
 
-	PYTHONPATH=./FlexOlmo python src/scripts/eval/launch_eval.py \
+	PYTHONPATH=./FlexOlmo python FlexOlmo/src/scripts/eval/launch_eval.py \
 	--model $MODEL \
 	--model-type hf \
 	--task $TASK \
