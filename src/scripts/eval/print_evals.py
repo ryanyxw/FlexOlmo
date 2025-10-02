@@ -565,6 +565,7 @@ def main(args):
         for model_name in formatted_model_names:
             pt.align[model_name] = "r"
         for task_name in task_names:
+            breakpoint()
             pt.add_row(
                 [format_task(task_name)]
                 + [
