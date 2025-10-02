@@ -126,7 +126,7 @@ for MODEL_PATH in "${MODELS[@]}"; do
         --env-secret AWS_ACCESS_KEY_ID=RYAN_AWS_ACCESS_KEY_ID \
         --env-secret AWS_SECRET_ACCESS_KEY=RYAN_AWS_SECRET_ACCESS_KEY \
         -- \
-        bash -c "cd FlexOlmo && PYTHONPATH=. python src/scripts/eval/launch_eval.py \
+        bash -c "PYTHONPATH=. python src/scripts/eval/launch_eval.py \
             --model $MODEL_PATH \
             --model-type hf \
             --task $TASK \
