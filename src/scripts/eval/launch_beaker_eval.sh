@@ -126,16 +126,15 @@ for MODEL_PATH in "${MODELS[@]}"; do
         --env-secret AWS_ACCESS_KEY_ID=RYAN_AWS_ACCESS_KEY_ID \
         --env-secret AWS_SECRET_ACCESS_KEY=RYAN_AWS_SECRET_ACCESS_KEY \
         -- \
-        bash -c "pwd"
-#        bash -c "cd FlexOlmo && PYTHONPATH=. python src/scripts/eval/launch_eval.py \
-#            --model $MODEL_PATH \
-#            --model-type hf \
-#            --task $TASK \
-#            --limit $LIMIT \
-#            --output-dir $OUTPUT_DIR \
-#            --batch-size $batch_size \
-#            --gpus $gpus \
-#            "
+        bash -c "cd FlexOlmo && PYTHONPATH=. python src/scripts/eval/launch_eval.py \
+            --model $MODEL_PATH \
+            --model-type hf \
+            --task $TASK \
+            --limit $LIMIT \
+            --output-dir $OUTPUT_DIR \
+            --batch-size $batch_size \
+            --gpus $gpus \
+            "
 
         echo "Launched evaluation for model: $model, task: $TASK"
         echo "----------------------------------------"
