@@ -354,8 +354,6 @@ def main(args):
 
     task_names = get_task_names(results)
 
-    breakpoint()
-
     # Task averaging options
     if args.avg_core:
         results = avg_tasks(results, "core9:mc", core9_tasks)
@@ -565,7 +563,6 @@ def main(args):
         for model_name in formatted_model_names:
             pt.align[model_name] = "r"
         for task_name in task_names:
-            breakpoint()
             pt.add_row(
                 [format_task(task_name)]
                 + [
