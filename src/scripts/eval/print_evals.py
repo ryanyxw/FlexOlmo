@@ -286,7 +286,6 @@ def main(args):
         # Check if base_dir itself contains metrics files
         # if this is not empty, the user is likely looking at results for a single model in this directory
         direct_metrics = list(glob_path(os.path.join(args.base_dir, "task-*metrics.json")))
-        breakpoint()
 
         if direct_metrics:
             # base_dir is a model directory itself
