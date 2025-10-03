@@ -14,7 +14,7 @@ model_type=hf
 # Define all available tasks from run_eval.sh (ALL tasks from all groups)
 TASKS=(
 #    # MC9 tasks
-#    arc_easy:mc::olmes
+    arc_easy:mc::olmes
 #    arc_challenge:mc::olmes
 #    boolq:mc::olmes
 #    csqa:mc::olmes
@@ -42,7 +42,7 @@ TASKS=(
 #    bbh:cot-v1::olmes
 
     # Math2 tasks
-    gsm8k::olmes
+#    gsm8k::olmes
 #    minerva_math_algebra::olmes
 #    minerva_math_counting_and_probability::olmes
 #    minerva_math_geometry::olmes
