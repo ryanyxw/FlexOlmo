@@ -15,19 +15,19 @@ model_type=hf
 TASKS=(
 #    # MC9 tasks
 #    arc_easy:mc::olmes
-    arc_challenge:mc::olmes
-    boolq:mc::olmes
-    csqa:mc::olmes
-    hellaswag:mc::olmes
-    openbookqa:mc::olmes
-    piqa:mc::olmes
-    socialiqa:mc::olmes
-    winogrande:mc::olmes
-
-    arc_easy:rc::olmes
-    arc_challenge:rc::olmes
-    boolq:rc::olmes
-    csqa:rc::olmes
+#    arc_challenge:mc::olmes
+#    boolq:mc::olmes
+#    csqa:mc::olmes
+#    hellaswag:mc::olmes
+#    openbookqa:mc::olmes
+#    piqa:mc::olmes
+#    socialiqa:mc::olmes
+#    winogrande:mc::olmes
+#
+#    arc_easy:rc::olmes
+#    arc_challenge:rc::olmes
+#    boolq:rc::olmes
+#    csqa:rc::olmes
     hellaswag:rc::olmes
     openbookqa:rc::olmes
     piqa:rc::olmes
