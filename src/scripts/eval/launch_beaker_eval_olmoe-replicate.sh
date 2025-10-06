@@ -4,7 +4,7 @@
 # Usage: bash src/scripts/eval/launch_beaker_eval.sh
 
 # Configuration
-MODELS=("/weka/oe-training-default/ryanwang/phdbrainstorm/models/olmoe_figure4-hf")
+MODELS=("/weka/oe-training-default/ryanwang/phdbrainstorm/models/niklas_figure4-hf")
 BASE_OUTPUT_DIR="/weka/oe-training-default/ryanwang/phdbrainstorm/evals"
 BATCH_SIZE=4
 CLUSTER="ai2/jupiter-cirrascale-2"
