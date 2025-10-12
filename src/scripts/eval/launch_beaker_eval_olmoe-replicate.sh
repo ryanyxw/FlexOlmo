@@ -20,8 +20,8 @@ TASKS=(
 #    csqa:mc::olmes
 #    hellaswag:mc::olmes
 #    openbookqa:mc::olmes
-#    piqa:mc::olmes
-#    socialiqa:mc::olmes
+    piqa:mc::olmes
+    socialiqa:mc::olmes
 #    winogrande:mc::olmes
 #
 #    arc_easy:rc::olmes
@@ -30,8 +30,8 @@ TASKS=(
 #    csqa:rc::olmes
 #    hellaswag:rc::olmes
 #    openbookqa:rc::olmes
-#    piqa:rc::olmes
-#    socialiqa:rc::olmes
+    piqa:rc::olmes
+    socialiqa:rc::olmes
 #    winogrande:rc::olmes
 
 #    # Gen5 tasks
@@ -42,32 +42,33 @@ TASKS=(
 #    drop::olmes
 
     # MMLU tasks
-    mmlu:mc::olmes
-#    mmlu_pro_mc::none
+#    mmlu:mc::olmes
+    mmlu_pro:mc::none
 #
-    mmlu:rc::olmes
+#    mmlu:rc::olmes
+    mmlu_pro:rc::none
 
     # AGI eval
-    agi_eval_english:1shot::olmes
+#    agi_eval_english:1shot::olmes
 
     # BBH
-    bbh:cot-v1::olmes
+#    bbh:cot-v1::olmes
 
     # Math2 tasks
-    gsm8k::olmes
-    minerva_math_algebra::olmes
-    minerva_math_counting_and_probability::olmes
-    minerva_math_geometry::olmes
-    minerva_math_intermediate_algebra::olmes
-    minerva_math_number_theory::olmes
-    minerva_math_prealgebra::olmes
-    minerva_math_precalculus::olmes
+#    gsm8k::olmes
+#    minerva_math_algebra::olmes
+#    minerva_math_counting_and_probability::olmes
+#    minerva_math_geometry::olmes
+#    minerva_math_intermediate_algebra::olmes
+#    minerva_math_number_theory::olmes
+#    minerva_math_prealgebra::olmes
+#    minerva_math_precalculus::olmes
 
     # Code4 tasks
-    codex_humaneval:temp0.8
-    codex_humanevalplus:temp0.8
-    mbpp::none
-    mbppplus::none
+#    codex_humaneval:temp0.8
+#    codex_humanevalplus:temp0.8
+#    mbpp::none
+#    mbppplus::none
 
 )
 
