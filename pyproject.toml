@@ -71,7 +71,9 @@ eval = [
     "s3fs",
     "smart-open",
     "torchvision",
-    "prettytable"
+    "prettytable",
+    "datasets==3.6.0",
+    "huggingface-hub==0.33.2",
 ]
 embeddings =[
     "gritlm",
