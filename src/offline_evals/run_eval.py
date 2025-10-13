@@ -643,6 +643,7 @@ def run_eval(args_dict: dict):
         for k, v in os.environ.items()
         if "GIT_REF" in k or "GIT_BRANCH_NAME" in k or "BEAKER" in k and "token" not in k.lower()
     }
+    breakpoint()
 
     for task_idx, task in enumerate(task_objects):
         start_time = time.time()
