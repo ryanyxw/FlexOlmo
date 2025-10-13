@@ -81,9 +81,6 @@ except ImportError:
 logging.basicConfig(format="%(asctime)s [%(levelname)s] %(message)s", level=logging.INFO)
 logger = logging.getLogger()
 
-print("Enteredd! ")
-
-
 def add_arg(parser, arg, defaults, **kwargs):
     if defaults is None:
         default = None
@@ -536,6 +533,8 @@ def run_eval(args_dict: dict):
     model_config = eval_config["model_config"]
     compute_config = eval_config["compute_config"]
     tasks_config = eval_config["tasks_config"]
+
+    breakpoint()
 
     task_objects = [
         load_task(task_config, compute_config["output_dir"]) for task_config in tasks_config
