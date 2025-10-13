@@ -78,7 +78,10 @@ try:
 except ImportError:
     pass
 
+logging.basicConfig(format="%(asctime)s [%(levelname)s] %(message)s", level=logging.INFO)
 logger = logging.getLogger()
+
+print("Enteredd! ")
 
 
 def add_arg(parser, arg, defaults, **kwargs):
