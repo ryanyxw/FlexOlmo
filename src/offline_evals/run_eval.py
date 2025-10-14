@@ -78,7 +78,6 @@ try:
 except ImportError:
     pass
 
-logging.basicConfig(format="%(asctime)s [%(levelname)s] %(message)s", level=logging.INFO)
 logger = logging.getLogger()
 
 def add_arg(parser, arg, defaults, **kwargs):
@@ -534,8 +533,6 @@ def run_eval(args_dict: dict):
     compute_config = eval_config["compute_config"]
     tasks_config = eval_config["tasks_config"]
 
-    breakpoint()
-
     task_objects = [
         load_task(task_config, compute_config["output_dir"]) for task_config in tasks_config
     ]
@@ -643,7 +640,6 @@ def run_eval(args_dict: dict):
         for k, v in os.environ.items()
         if "GIT_REF" in k or "GIT_BRANCH_NAME" in k or "BEAKER" in k and "token" not in k.lower()
     }
-    breakpoint()
 
     for task_idx, task in enumerate(task_objects):
         start_time = time.time()
