@@ -4,7 +4,7 @@
 # Usage: bash src/scripts/eval/launch_beaker_eval.sh
 
 # Configuration
-MODELS=("/weka/oe-training-default/ryanwang/phdbrainstorm/models/olmoe-pretrain-replicate/step30995-hf")
+MODELS=("/weka/oe-training-default/ryanwang/phdbrainstorm/models/olmoe-pretrain-mose-unbalanced-1012/step30995-hf")
 BASE_OUTPUT_DIR="/weka/oe-training-default/ryanwang/phdbrainstorm/evals"
 BATCH_SIZE=4
 CLUSTER="ai2/jupiter-cirrascale-2"
@@ -14,14 +14,14 @@ model_type=hf
 # Define all available tasks from run_eval.sh (ALL tasks from all groups)
 TASKS=(
 #    # MC9 tasks
-#    arc_easy:mc::olmes
+    arc_easy:mc::olmes
 #    arc_challenge:mc::olmes
 #    boolq:mc::olmes
 #    csqa:mc::olmes
 #    hellaswag:mc::olmes
 #    openbookqa:mc::olmes
-    piqa:mc::olmes
-    socialiqa:mc::olmes
+#    piqa:mc::olmes
+#    socialiqa:mc::olmes
 #    winogrande:mc::olmes
 #
 #    arc_easy:rc::olmes
@@ -30,8 +30,8 @@ TASKS=(
 #    csqa:rc::olmes
 #    hellaswag:rc::olmes
 #    openbookqa:rc::olmes
-    piqa:rc::olmes
-    socialiqa:rc::olmes
+#    piqa:rc::olmes
+#    socialiqa:rc::olmes
 #    winogrande:rc::olmes
 #
 #    # Gen5 tasks
@@ -43,18 +43,17 @@ TASKS=(
 #
 #    # MMLU tasks
 #    mmlu:mc::olmes
-    mmlu_pro:mc::none
-
+#    mmlu_pro:mc::none
+#
 #    mmlu:rc::olmes
-    mmlu_pro:rc::none
-
-    # AGI eval
+#
+#    # AGI eval
 #    agi_eval_english:1shot::olmes
-
-    # BBH
+#
+#    # BBH
 #    bbh:cot-v1::olmes
-
-    # Math2 tasks
+#
+#    # Math2 tasks
 #    gsm8k::olmes
 #    minerva_math_algebra::olmes
 #    minerva_math_counting_and_probability::olmes
